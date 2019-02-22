@@ -1,13 +1,14 @@
 require 'sinatra/base'
 
-class Birthday < Sinatra::Base
 
-  get '/' do
+class Birthday < Sinatra::Base
+  enable :sessions
+
+  get'/' do
     erb :index
   end
 
-
-  post '/info' do
+  post '/details' do
     session[:name] = params[:name]
     session[:day] = params[:day]
     session[:month] = params[:month]
@@ -15,13 +16,11 @@ class Birthday < Sinatra::Base
   end
 
   get '/hello' do
-     @name = session[:name]
-     @day = session[:day]
-     @month = session[:month]
-     erb(:hello)
-   end
+    @name = session[:name]
+    @day = session[:day]
+    @month = session[:month]
+    erb :hello
+  end
 
-
- run if app_file == $0
-
+run! if app_file == $0
 end
